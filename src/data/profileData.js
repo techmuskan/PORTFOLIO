@@ -4,7 +4,7 @@ export const profileData = {
   location: "Bhopal, Madhya Pradesh, India",
   phone: "+91 96448 70597",
   tagline:
-    "Results-driven CSE undergraduate building scalable web solutions with strong DSA and FULL-STACK skills.",
+    "Results‑driven CSE undergraduate building scalable web solutions with strong DSA and full‑stack expertise.",
   about:
     "I build scalable web applications with clean backend architecture and seamless user experience.",
   highlights: [
