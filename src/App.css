@@ -1024,6 +1024,94 @@ ul {
   }
 }
 
+@media (max-width: 640px) {
+  .section {
+    padding: 4rem 0;
+  }
+
+  .hero {
+    padding: 4.5rem 0 3rem;
+  }
+
+  .hero__content {
+    gap: 1.8rem;
+  }
+
+  .hero__actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+
+  .hero__actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hero__stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pill {
+    font-size: 0.9rem;
+  }
+
+  .project-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .project-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .contact-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .contact-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .contact-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+  }
+
+  .about-grid,
+  .stack-grid,
+  .project-grid,
+  .contact-grid,
+  .edu-grid,
+  .ai-grid {
+    gap: 1.1rem;
+  }
+
+  .about-card,
+  .stack-card,
+  .project-card,
+  .contact-card,
+  .edu-card,
+  .ai-card {
+    padding: 1.2rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .hero__stats {
+    grid-template-columns: 1fr;
+  }
+
+  .nav__links {
+    left: 1rem;
+    right: 1rem;
+  }
+}
+
 @media (max-width: 900px) {
   .carousel__slide {
     flex-basis: 100%;
