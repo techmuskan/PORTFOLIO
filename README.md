@@ -1,15 +1,15 @@
 # Muskan Portfolio
 
-Professional portfolio built with React + Vite.
+A professional portfolio built with  **React + Vite** , showcasing projects, resume, and technical experiments. Designed for speed, modularity, and modern development practices.
 
-## Local Setup
+## Quick Start
 
 ```bash
 npm install
 npm run dev
 ```
 
-## Build
+## Scripts
 
 ```bash
 npm run build
@@ -19,6 +19,7 @@ npm run preview
 ## Deploy
 
 ### Vercel (Recommended)
+
 - Import the repository
 - Framework: Vite
 - Build Command: `npm run build`
@@ -27,6 +28,7 @@ npm run preview
 The `api/leetcode/[username].js` serverless function works automatically on Vercel.
 
 ### Netlify
+
 - Build Command: `npm run build`
 - Publish Directory: `dist`
 
@@ -39,3 +41,13 @@ src/            # React components
 public/         # Static assets (resume, images)
 api/            # Serverless proxy (Vercel)
 ```
+
+## License
+
+This project is licensed under the MIT License.
+
+## Contact
+
+Email: kawadkarmuskan4@gmail.com
+LinkedIn: https://www.linkedin.com/in/muskankawadkar
+GitHub: https://github.com/techmuskan
