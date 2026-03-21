@@ -1,21 +1,21 @@
 export const profileData = {
   name: "Muskan Kawadkar",
-  role: "Aspiring Software Engineer",
+  role: ["Aspiring Software Engineer", "AI Enthusiast", "FULL - STACK Developer"],
   location: "Bhopal, Madhya Pradesh, India",
   phone: "+91 96448 70597",
   tagline:
-    "Results-driven CSE undergraduate building scalable web solutions with strong DSA and full-stack skills.",
+    "Results-driven CSE undergraduate building scalable web solutions with strong DSA and FULL-STACK skills.",
   about:
     "I build scalable web applications with clean backend architecture and seamless user experience.",
   highlights: [
     "Engineered MERN dashboards and user portals with secure CRUD workflows",
     "Optimized MongoDB queries, improving performance by 30%",
     "Integrated REST APIs and developed responsive, production-ready UI",
-    "Currently exploring AI-powered applications (HealthTech focus)",
+    "Currently exploring AI-powered applications",
   ],
   stats: [
-    { label: "Projects", value: "3+" },
-    { label: "Hackathons", value: "5" },
+    { label: "Projects", value: "8+" },
+    { label: "Hackathons", value: "5+" },
     { label: "NPTEL", value: "2" },
     { label: "Certificates", value: "7+" },
   ],
@@ -26,7 +26,7 @@ export const profileData = {
     },
     {
       title: "What I’ve Done",
-      text: "Built MERN dashboards, optimized databases by 30%, and shipped ML-driven prediction tools.",
+      text: "Built MERN dashboards, optimized databases by 30%, and shipped production-ready UI.",
     },
     {
       title: "What I Aim For",
@@ -36,7 +36,7 @@ export const profileData = {
   techDna: "MERN + AI + Problem Solving = My Core Stack",
   skillProof: [
     "Optimized MongoDB queries → 30% faster performance",
-    "Built 3+ full-stack projects using MERN",
+    "Built 3+ FULL-STACK projects using MERN",
     "Shipped production-ready UI in internship sprints",
   ],
   stackInAction: [
@@ -92,7 +92,7 @@ export const profileData = {
       title: "AI / ML",
       items: [
         { name: "Python", level: "intermediate" },
-        { name: "Scikit-learn", level: "intermediate" },
+        { name: "Streamlit", level: "intermediate" },
       ],
     },
     {
@@ -138,8 +138,8 @@ export const profileData = {
       impact: "Delivered responsive UI and optimized API response times.",
       tech: ["MongoDB", "Express.js", "React.js", "Node.js"],
       image: "https://placehold.co/800x500/0f1722/2dd4bf?text=WanderList",
-      demo: "#",
-      demoLabel: "Show (Uploading Soon)",
+      demo: "https://wanderlist-t7vn.onrender.com/",
+      demoLabel: "Live Demo",
       repo: "https://github.com/techmuskan/WanderList",
     },
     {
@@ -164,8 +164,8 @@ export const profileData = {
       impact: "Improved information discovery with focused UI and summaries.",
       tech: ["React", "Node.js"],
       image: "https://placehold.co/800x500/0f1722/94a3b8?text=Stock+Platform",
-      demo: "#",
-      demoLabel: "Show (Uploading Soon)",
+      demo: "https://stock-platform-pbgp.onrender.com/",
+      demoLabel: "Live Demo",
       repo: "https://github.com/techmuskan/Stock_Platform",
     },
   ],

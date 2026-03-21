@@ -29,8 +29,20 @@ export default function App() {
   const [showTop, setShowTop] = useState(false);
   const [projectIndex, setProjectIndex] = useState(0);
   const [slidesPerView, setSlidesPerView] = useState(2);
+  const [navOpen, setNavOpen] = useState(false);
+  const [roleIndex, setRoleIndex] = useState(0);
+  const [roleText, setRoleText] = useState("");
   const featuredProjects = profileData.projects;
   const maxIndex = Math.max(0, featuredProjects.length - slidesPerView);
+  const roles = Array.isArray(profileData.role) ? profileData.role : [profileData.role];
+  const currentRole = roles[roleIndex % roles.length] || "";
+  const primaryRole = roles[0] || "";
+  const swipeStateRef = useRef({
+    startX: 0,
+    startY: 0,
+    lastX: 0,
+    isSwiping: false,
+  });
 
   useEffect(() => {
     AOS.init({ duration: 900, once: true });
@@ -59,6 +71,28 @@ export default function App() {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  useEffect(() => {
+    if (!currentRole) return;
+    let timeoutId;
+    const typingSpeed = 80;
+    const pauseAfterFull = 900;
+
+    const typeNext = (index) => {
+      if (index <= currentRole.length) {
+        setRoleText(currentRole.slice(0, index));
+        timeoutId = setTimeout(() => typeNext(index + 1), typingSpeed);
+      } else {
+        timeoutId = setTimeout(() => {
+          setRoleIndex((prev) => (prev + 1) % roles.length);
+          setRoleText("");
+        }, pauseAfterFull);
+      }
+    };
+
+    typeNext(0);
+    return () => clearTimeout(timeoutId);
+  }, [currentRole, roles.length]);
 
   useEffect(() => {
     if (projectIndex > maxIndex) {
@@ -95,12 +129,58 @@ export default function App() {
   };
 
   const goPrevProject = () => {
-    setProjectIndex((prev) =>
-      prev === 0 ? maxIndex : prev - 1
-    );
+    setProjectIndex((prev) => Math.max(0, prev - 1));
   };
   const goNextProject = () => {
-    setProjectIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
+    setProjectIndex((prev) => Math.min(maxIndex, prev + 1));
+  };
+
+  const handleTouchStart = (event) => {
+    const touch = event.touches[0];
+    swipeStateRef.current = {
+      startX: touch.clientX,
+      startY: touch.clientY,
+      lastX: touch.clientX,
+      isSwiping: false,
+    };
+  };
+
+  const handleTouchMove = (event) => {
+    const touch = event.touches[0];
+    if (!touch) return;
+
+    const state = swipeStateRef.current;
+    const deltaX = touch.clientX - state.startX;
+    const deltaY = touch.clientY - state.startY;
+
+    if (!state.isSwiping) {
+      if (Math.abs(deltaX) > 10 && Math.abs(deltaX) > Math.abs(deltaY)) {
+        state.isSwiping = true;
+      } else if (Math.abs(deltaY) > 10) {
+        return;
+      }
+    }
+
+    if (state.isSwiping) {
+      event.preventDefault();
+      state.lastX = touch.clientX;
+    }
+  };
+
+  const handleTouchEnd = () => {
+    const { startX, lastX, isSwiping } = swipeStateRef.current;
+    if (!isSwiping) return;
+
+    const deltaX = lastX - startX;
+    const threshold = 50;
+
+    if (deltaX <= -threshold && projectIndex < maxIndex) {
+      setProjectIndex((prev) => Math.min(maxIndex, prev + 1));
+      return;
+    }
+    if (deltaX >= threshold && projectIndex > 0) {
+      setProjectIndex((prev) => Math.max(0, prev - 1));
+    }
   };
 
   return (
@@ -114,14 +194,31 @@ export default function App() {
           <div className="logo logo--typing">
             <span>&lt; Muskan.dev /&gt;</span>
           </div>
-          <ul className="nav__links">
-            <li><a href="#about">About</a></li>
-            <li><a href="#skills">Stack</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#experience">Experience</a></li>
-            <li><a href="#contact">Contact</a></li>
+          <button
+            type="button"
+            className={`nav__toggle ${navOpen ? "is-open" : ""}`}
+            aria-label="Toggle navigation menu"
+            aria-controls="primary-navigation"
+            aria-expanded={navOpen}
+            onClick={() => setNavOpen((prev) => !prev)}
+          >
+            <span className="nav__glyph" aria-hidden="true">
+              {navOpen ? "✕" : "☰"}
+            </span>
+          </button>
+          <ul className={`nav__links ${navOpen ? "is-open" : ""}`} id="primary-navigation">
+            <li><a href="#about" onClick={() => setNavOpen(false)}>About</a></li>
+            <li><a href="#skills" onClick={() => setNavOpen(false)}>Stack</a></li>
+            <li><a href="#projects" onClick={() => setNavOpen(false)}>Projects</a></li>
+            <li><a href="#experience" onClick={() => setNavOpen(false)}>Experience</a></li>
+            <li><a href="#contact" onClick={() => setNavOpen(false)}>Contact</a></li>
+            <li className="nav__resume nav__resume--mobile">
+              <a href={profileData.resume} download onClick={() => setNavOpen(false)}>
+                <FaDownload aria-hidden="true" /> Resume
+              </a>
+            </li>
           </ul>
-          <a className="btn btn--ghost" href={profileData.resume} download>
+          <a className="btn btn--ghost nav__resume" href={profileData.resume} download>
             <FaDownload aria-hidden="true" /> Resume
           </a>
         </nav>
@@ -135,8 +232,10 @@ export default function App() {
                 <span>{profileData.location}</span>
               </div>
               <h1 id="hero-heading" className="hero-text fade-up">
-                {profileData.name}
-                <span className="accent"> {profileData.role}</span>
+                <span className="hero-name">{profileData.name}</span>
+                <span className="accent accent--inline role-rotator">
+                  {roleText}
+                </span>
               </h1>
               <p className="hero-subtitle fade-up">{profileData.tagline}</p>
               <div className="hero__actions fade-up">
@@ -163,7 +262,7 @@ export default function App() {
                 loading="lazy"
               />
               <div className="hero__card__body">
-                <div className="hero__role">{profileData.role}</div>
+                <div className="hero__role">{primaryRole}</div>
                 <p>{profileData.about}</p>
                 <ul className="hero__highlights">
                   {profileData.highlights.map((item) => (
@@ -271,7 +370,13 @@ export default function App() {
                   </button>
                 </div>
               </div>
-              <div className="carousel__viewport">
+              <div
+                className="carousel__viewport"
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
+                onTouchCancel={handleTouchEnd}
+              >
                 <div
                   className="carousel__track"
                   style={{ transform: `translateX(-${projectIndex * (100 / slidesPerView)}%)` }}
@@ -303,14 +408,26 @@ export default function App() {
                           ))}
                         </div>
                         <div className="project-actions">
-                          <button
-                            type="button"
-                            className="btn btn--small"
-                            aria-label={`Demo for ${project.name} will be uploaded soon`}
-                            disabled
-                          >
-                            <FaExternalLinkAlt aria-hidden="true" /> {project.demoLabel || "Demo"}
-                          </button>
+                          {project.demo && project.demo !== "#" ? (
+                            <a
+                              href={project.demo}
+                              className="btn btn--small"
+                              aria-label={`Open live demo for ${project.name}`}
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              <FaExternalLinkAlt aria-hidden="true" /> {project.demoLabel || "Live Demo"}
+                            </a>
+                          ) : (
+                            <button
+                              type="button"
+                              className="btn btn--small"
+                              aria-label={`Demo for ${project.name} will be uploaded soon`}
+                              disabled
+                            >
+                              <FaExternalLinkAlt aria-hidden="true" /> {project.demoLabel || "Demo"}
+                            </button>
+                          )}
                           <a href={project.repo} className="btn btn--ghost btn--small" aria-label={`View repository for ${project.name}`}>
                             <FaGithub aria-hidden="true" /> Code
                           </a>
@@ -407,7 +524,7 @@ export default function App() {
                   <div className="timeline__dot" />
                   <div className="timeline__content">
                     <div className="timeline__title">
-                      <h3>{exp.title}</h3>
+                      <h3 className="experience-title">{exp.title}</h3>
                       <span>{exp.company}</span>
                     </div>
                     <p className="muted"><FaCalendarAlt /> {exp.duration}</p>
