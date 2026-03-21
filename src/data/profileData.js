@@ -151,8 +151,8 @@ export const profileData = {
       impact: "Interactive predictions with a sleek Streamlit UI.",
       tech: ["Python", "Streamlit", "ML"],
       image: "https://placehold.co/800x500/0f1722/f59e0b?text=HealthAI",
-      demo: "#",
-      demoLabel: "Show (Uploading Soon)",
+      demo: "https://diagnose-with-ai.streamlit.app/",
+      demoLabel: "Live Demo",
       repo: "https://github.com/techmuskan/HEALTHEYE",
     },
     {

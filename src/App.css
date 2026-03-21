@@ -1078,8 +1078,28 @@ ul {
 
   .contact-meta {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     gap: 0.35rem;
+  }
+
+  .contact-card {
+    text-align: center;
+  }
+
+  .contact-meta {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .contact-meta .phone-link {
+    display: inline-block;
+    font-size: 1rem;
+    letter-spacing: 0.01em;
+    font-weight: 600;
+  }
+
+  .contact-meta svg {
+    display: none;
   }
 
   .about-grid,
