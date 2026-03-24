@@ -138,7 +138,7 @@ export const profileData = {
       impact: "Delivered responsive UI and optimized API response times.",
       tech: ["MongoDB", "Express.js", "React.js", "Node.js"],
       image: "https://placehold.co/800x500/0f1722/2dd4bf?text=WanderList",
-      demo: "https://wanderlist-t7vn.onrender.com/",
+      demo: "https://wanderlist-hlm2.onrender.com",
       demoLabel: "Live Demo",
       repo: "https://github.com/techmuskan/WanderList",
     },
